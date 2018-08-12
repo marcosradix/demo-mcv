@@ -38,7 +38,7 @@ public abstract class AbstractDaoGeneric<T, PK extends Serializable> {
 	    }
 	    
 	    public List<T> findAll() {
-			return entityManager.createQuery("from " + entityClass.getSimpleName(), entityClass)
+			return entityManager.createQuery("from " + entityClass.getName(), entityClass)
 					.getResultList();
 	    }    
 	    
