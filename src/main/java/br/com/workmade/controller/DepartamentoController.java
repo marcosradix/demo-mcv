@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.workmade.model.DepartamentoEntity;
 import br.com.workmade.service.DepartamentoService;
@@ -15,6 +16,10 @@ import br.com.workmade.service.DepartamentoService;
 @RequestMapping("/departamentos")
 public class DepartamentoController {
 	
+	private static final String DEPARTAMENTO_ADICIONADO_COM_SUCESSO = "Departamento adicionado com sucesso.";
+	private static final String DEPARTAMENTO_EDITADO_COM_SUCESSO = "Departamento editado com sucesso.";
+	private static final String DEPARTAMENTO_EXCLUIDO_COM_SUCESSO = "Departamento excluido com sucesso.";
+	private static final String DEPARTAMENTO_COM_CARGO_S_VINCULADO_S = "O Departamento não pode ser excluido pois tem cargo(s) vinculado(s).";
 	@Autowired
 	private DepartamentoService departamentoService;
 
@@ -31,8 +36,9 @@ public class DepartamentoController {
 	}
 	
 	@PostMapping("/salvar")
-	public String salvar(DepartamentoEntity departamento) {
+	public String salvar(DepartamentoEntity departamento, RedirectAttributes redi) {
 		departamentoService.salvar(departamento);
+		redi.addFlashAttribute("success", DEPARTAMENTO_ADICIONADO_COM_SUCESSO);
 		return "redirect:/departamentos/cadastrar";	
 	}
 	
@@ -44,15 +50,19 @@ public class DepartamentoController {
 	}
 	
 	@PostMapping("/editar")
-	public String editar(DepartamentoEntity departamento) {
+	public String editar(DepartamentoEntity departamento, RedirectAttributes redi) {
 		departamentoService.editar(departamento);
-		return "redirect:/departamentos/cadastrar";
+		redi.addFlashAttribute("success", DEPARTAMENTO_EDITADO_COM_SUCESSO);
+		return "redirect:/departamentos/listar";
 	}
 	
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, ModelMap model) {
-		 if(!departamentoService.departamentoTemCargos(id)) {
-			 departamentoService.excluir(id);
+		 if(departamentoService.departamentoTemCargos(id)) {
+			 model.addAttribute("fail", DEPARTAMENTO_COM_CARGO_S_VINCULADO_S);
+		 }else {
+			 departamentoService.excluir(id);	
+			 model.addAttribute("success", DEPARTAMENTO_EXCLUIDO_COM_SUCESSO);
 		 }
 		return listar(model);
 		
