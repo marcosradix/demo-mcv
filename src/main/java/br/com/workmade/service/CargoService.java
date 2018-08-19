@@ -11,5 +11,6 @@ public interface CargoService {
 	void excluir (Long id);
 	CargoEntity buscarPorId(Long id);
 	List<CargoEntity> buscarTodos();
+	boolean cargoTemFuncionarios(Long id);
 
 }
