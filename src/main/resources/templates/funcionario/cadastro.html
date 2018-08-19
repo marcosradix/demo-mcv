@@ -24,7 +24,7 @@
 	        </div>
 	
 	        <div class="container" id="cadastro">
-	            <form action="/funcionarios/salvar" method="POST">
+	            <form th:action="@{/funcionarios/salvar}" th:object="${funcionarioEntity}" method="POST">
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="nome">Nome do Funcionário</label>
@@ -62,19 +62,11 @@
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="cargo">Cargo</label>
-	                        <select id="cargo" class="form-control" name="cargo">
+	                        <select id="cargo" class="form-control" th:field="*{cargo}">
 	                            <option value="">Selecione...</option>
-	                            <option value="1">Auxiliar Contábil</option>
-	                            <option value="2">Auxiliar Administrativo</option>
-	                            <option value="3">Contador</option>
-	                            <option value="4">Adminitrador</option>
-	                            <option value="5">Programado PHP</option>
-	                            <option value="6">Desenvolvedor Java Jr.</option>
-	                            <option value="7">Desenvolvedor Java Pleno</option>
-	                            <option value="8">Desenvolvedor Java Senior</option>
-	                            <option value="9">Auxiliar de RH</option>
-	                            <option value="10">Coordenador de RH</option>
-	                            <option value="11">Psicologo</option>
+	                            <option th:each="car : ${cargos}" th:value="${car.id}" 
+	                            	th:text="${car.nome}">...</option>
+	                           
 	                        </select>
 	                        <div class="invalid-feedback">
 	
@@ -125,34 +117,10 @@
 	                    </div>
 	                    <div class="form-group col-md-4">
 	                        <label for="uf">UF</label>
-	                        <select id="uf" class="form-control" name="endereco.uf">
+	                        <select id="uf" class="form-control" th:fiel="*{endereco}">
 	                            <option value="">Selecione...</option>
-	                            <option value="AC">AC</option>
-	                            <option value="AL">AL</option>
-	                            <option value="AM">AM</option>
-	                            <option value="BA">BA</option>
-	                            <option value="CE">CE</option>
-	                            <option value="DF">DF</option>
-	                            <option value="ES">ES</option>
-	                            <option value="GO">GO</option>
-	                            <option value="MA">MA</option>
-	                            <option value="MT">MT</option>
-	                            <option value="MS">MS</option>
-	                            <option value="MG">MG</option>
-	                            <option value="PA">PA</option>
-	                            <option value="PB">PB</option>
-	                            <option value="PR">PR</option>
-	                            <option value="PE">PE</option>
-	                            <option value="PI">PI</option>
-	                            <option value="RJ">RJ</option>
-	                            <option value="RN">RN</option>
-	                            <option value="RS">RS</option>
-	                            <option value="RO">RO</option>
-	                            <option value="RR">RR</option>
-	                            <option value="SC">SC</option>
-	                            <option value="SP">SP</option>
-	                            <option value="SE">SE</option>
-	                            <option value="TO">TO</option>
+	                            <option th:each="uf : ${ufs}" th:value="${uf.sigla}" 
+	                            	th:text="${uf.descricao}" >.</option>
 	                        </select>
 	                        <div class="invalid-feedback">
 	
