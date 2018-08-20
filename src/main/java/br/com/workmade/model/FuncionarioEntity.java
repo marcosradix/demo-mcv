@@ -10,6 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 import br.com.workmade.domain.AbstractEntity;
 
 @Entity(name= "FUNCIONARIOS")
@@ -24,13 +29,15 @@ public class FuncionarioEntity extends AbstractEntity<Long> {
 	private String nome;
 
 	// Total de 7 digitos e duas casas decimais e se não houver valor não será null e sim 0.00
+	@NumberFormat(pattern = "#,##0.00", style= Style.CURRENCY)
 	@Column(nullable=false, columnDefinition="DECIMAl(7,2) DEFAULT 0.00")
 	private BigDecimal salario;
 	
+	@DateTimeFormat(iso= ISO.DATE)
 	@Column(name="data_entrada", nullable=false, columnDefinition="DATE")
 	private LocalDate dataEntrada;
 	
-	
+	@DateTimeFormat(iso= ISO.DATE)
 	@Column(name="data_saida", nullable=true, columnDefinition="DATE")
 	private LocalDate dataSaida;
 	
