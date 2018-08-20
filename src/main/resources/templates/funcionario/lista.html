@@ -134,7 +134,7 @@
 	                                <span class="oi oi-eye" title="Visualizar" aria-hidden="true"></span>
 	                            </button>
 	                        </td>
-	                        <td th:text="${#temporals.format(func.dataEntrada)}" >01/10/2014</td>
+	                        <td th:text="${#temporals.format(func.dataEntrada, 'dd/MM/yyyy')}" >01/10/2014</td>
 	                        <td th:text="${#temporals.format(func.dataSaida)}" >01/10/2014</td>
 	                        <td colspan="2">
 	                            <a class="btn btn-info btn-sm" href="/funcionarios/editar/1" role="button">
