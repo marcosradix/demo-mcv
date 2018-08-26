@@ -4,11 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Table;
 
 import br.com.workmade.domain.AbstractEntity;
 import br.com.workmade.ufEnum.UF;
 
-@Entity(name="ENDERECOS")
+@Entity
+@Table(name= "ENDERECOS")
 public class EnderecoEntity extends AbstractEntity<Long> {
 
 	/**

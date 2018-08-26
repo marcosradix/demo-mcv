@@ -1,5 +1,7 @@
 package br.com.workmade.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +47,55 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	public List<FuncionarioEntity> buscarTodos() {
 		return funcionarioDao.findAll();
 	}
+	@Override
+	public List<FuncionarioEntity> buscarPorNome(String nome) {
+		return funcionarioDao.finByNome(nome);
+	}
+	@Override
+	public List<FuncionarioEntity> buscarPorCargo(Long id) {
+		return funcionarioDao.findByCargoId(id);
+	}
+	@Override
+	public List<FuncionarioEntity> buscarPorDatas(LocalDate entrada, LocalDate saida) {
+		if(entrada != null && saida != null) {
+			return funcionarioDao.findFuncionarioByDataEntradaDataSaida(entrada, saida);
+		}else if(entrada != null) {
+			return funcionarioDao.findByDataEntrada(entrada);
+		}else if(saida != null) {
+			return funcionarioDao.findByDataSaida(saida);
+		}else {
+			return new ArrayList<>();
+		}
+		
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

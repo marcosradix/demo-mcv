@@ -40,10 +40,10 @@
 	                    <div class="collapse" id="collapseNome">
 	
 	                        <nav class="navbar navbar-light bg-light">
-	                            <form class="form-inline" method="GET" action="/funcionarios/buscar/nome">
+	                            <form class="form-inline" method="GET" th:action="@{/funcionarios/buscar/nome}">
 	                                <input class="form-control mr-sm-2" type="search" placeholder="nome" aria-label="Search"
-	                                       name="nome" />
-	                                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+	                                       th:name="nome" />
+	                                <button class="btn btn-outline-success my-2 my-sm-0">Pesquisar</button>
 	                            </form>
 	                        </nav>
 	
@@ -55,22 +55,13 @@
 	                    <div class="collapse" id="collapseCargo">
 	
 	                        <nav class="navbar navbar-light bg-light">
-	                            <form class="form-inline" method="GET" action="/funcionarios/buscar/cargo">
-	                                <select class="form-control mr-sm-2" name="cargo" aria-label="Search">
+	                            <form class="form-inline" method="GET" th:action="@{/funcionarios/buscar/cargo}">
+	                                <select class="form-control mr-sm-2" th:name="idCargo" aria-label="Search">
 	                                    <option value="">Cargo</option>
-	                                    <option value="1">Auxiliar Contábil</option>
-	                                    <option value="2">Auxiliar Administrativo</option>
-	                                    <option value="3">Contador</option>
-	                                    <option value="4">Adminitrador</option>
-	                                    <option value="5">Programado PHP</option>
-	                                    <option value="6">Desenvolvedor Java Jr.</option>
-	                                    <option value="7">Desenvolvedor Java Pleno</option>
-	                                    <option value="8">Desenvolvedor Java Senior</option>
-	                                    <option value="9">Auxiliar de RH</option>
-	                                    <option value="10">Coordenador de RH</option>
-	                                    <option value="11">Psicologo</option>
+	                                    <option th:each="car : ${cargos}" th:value="${car.id}"
+	                                    th:text="${car.nome}" >.</option>
 	                                </select>
-	                                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+	                                <button class="btn btn-outline-success my-2 my-sm-0">Pesquisar</button>
 	                            </form>
 	                        </nav>
 	
@@ -82,12 +73,23 @@
 	                    <div class="collapse" id="collapseData">
 	
 	                        <nav class="navbar navbar-light bg-light">
-	                            <form class="form-inline" method="GET" action="/funcionarios/buscar/data">
+	                            <form class="form-inline" method="GET" th:action="@{/funcionarios/buscar/data}">
+	                            
+	                            <div class="form-group">
+    								<div class="col-md-6 float-left" >
+            							<label for="entrada" class="control-label">Data de Entrada</label>
+        							</div>
 	                                <input class="form-control mr-sm-2" type="date" aria-label="Search"
-	                                       name="entrada" />
+	                                       th:name="entrada" id="entrada" />
+	                                       </div>
+	                              <div class="form-group">
+    								<div class="col-md-6 float-left">
+            							<label for="saida" class="control-label">Data de saída</label>
+        							</div>
 	                                <input class="form-control mr-sm-2" type="date" aria-label="Search"
-	                                       name="saida" />
-	                                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+	                                       th:name="saida" id="saida" />
+	                                       </div>
+	                                <button class="btn btn-outline-success my-2 my-sm-0">Pesquisar</button>
 	                            </form>
 	                        </nav>
 	
@@ -97,12 +99,14 @@
 	
 	
 	            <div class="table-responsive">
+	            <div th:replace="fragments/alert" ></div>
+	            
 	                <table class="table table-striped table-hover table-sm">
 	                    <thead>
 	                    <tr>
 	                        <th>#</th>
 	                        <th>Nome</th>
-	                        <th>R$ Salário</th>
+	                        <th>Salário</th>
 	                        <th>Departamento</th>
 	                        <th>Cargo</th>
 	                        <th>Endereço</th>
@@ -115,12 +119,12 @@
 	                    <tr th:each="func : ${funcionarios}" >
 	                        <td th:text="${func.id}" >.</td>
 	                        <td th:text="${func.nome}"> .</td>
-	                        <td th:text="${func.salario}" >.</td>
+	                        <td th:text="|R$ ${func.salario}|" >.</td>
 	                        <td th:text="${func.cargo.departamento.nome}" >.</td>
 	                        <td th:text="${func.cargo.nome}" >.</td>
 	                        <td>
 	                            <button type="button" class="btn btn-secondary btn-sm" data-container="body"
-	                                    data-toggle="popover" data-placement="top"
+	                                    data-toggle="popover" data-placement="right"
 	                                    
 	                                    th:attr="data-content=${#strings.concat(
 	                                    func.endereco.logradouro, ',',
@@ -134,13 +138,15 @@
 	                                <span class="oi oi-eye" title="Visualizar" aria-hidden="true"></span>
 	                            </button>
 	                        </td>
+	                        
 	                        <td th:text="${#temporals.format(func.dataEntrada, 'dd/MM/yyyy')}" >01/10/2014</td>
 	                        <td th:text="${#temporals.format(func.dataSaida)}" >01/10/2014</td>
 	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/funcionarios/editar/1" role="button">
+	                        
+	                            <a class="btn btn-info btn-sm" th:href="@{/funcionarios/editar/{id}  (id=${func.id}) }" role="button">
 	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
 	                            </a>
-	                            <button id="btn_funcionarios/excluir/1" type="button" class="btn btn-danger btn-sm"
+	                            <button th:id="${#strings.concat('btn_funcionarios/excluir/', func.id) }" type="button" class="btn btn-danger btn-sm"
 	                                    data-toggle="modal" data-target="#myModal">
 	                                <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
 	                            </button>
@@ -151,7 +157,15 @@
 	                </table>
 	            </div>
 	        </div>
+	        <div th:replace="fragments/modal :: modal" ></div>
 	    </section>
 	    
 </body>
-</html>		
+</html>
+
+
+
+
+
+
+		

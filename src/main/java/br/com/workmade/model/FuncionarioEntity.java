@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
@@ -17,7 +18,8 @@ import org.springframework.format.annotation.NumberFormat.Style;
 
 import br.com.workmade.domain.AbstractEntity;
 
-@Entity(name= "FUNCIONARIOS")
+@Entity
+@Table(name= "FUNCIONARIOS")
 public class FuncionarioEntity extends AbstractEntity<Long> {
 
 	/**

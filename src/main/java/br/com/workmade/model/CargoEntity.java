@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import br.com.workmade.domain.AbstractEntity;
 
-@Entity(name= "CARGOS")
+@Entity
+@Table(name= "CARGOS")
 public class CargoEntity extends AbstractEntity<Long> {
 
 	/**

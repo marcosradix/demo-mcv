@@ -26,7 +26,7 @@
 	        <div class="container" id="cadastro">
 	        <div th:replace="fragments/alert" ></div>
 	        
-	            <form th:action="@{/funcionarios/salvar}" th:object="${funcionarioEntity}" method="POST">
+	            <form th:action="${funcionarioEntity.id == null} ?   @{/funcionarios/salvar}  : @{/funcionarios/editar}" th:object="${funcionarioEntity}" method="POST">
 	                <div class="form-row">
 	                    <div class="form-group col-md-6">
 	                        <label for="nome">Nome do Funcionário</label>
@@ -39,7 +39,7 @@
 	                    <div class="form-group col-md-6">
 	                        <label for="salario">Salário Bruto</label>
 	                        <input type="text" class="form-control" id="salario" data-mask="#.##0,00"
-	                               data-mask-reverse="true" th:field="*{salario}"/>
+	                               data-mask-reverse="true" th:field="*{salario}" required="required"/>
 	                        <div class="invalid-feedback">
 	
 	                        </div>

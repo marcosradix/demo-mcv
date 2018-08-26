@@ -5,10 +5,12 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import br.com.workmade.domain.AbstractEntity;
 
-@Entity(name = "DEPARTAMENTOS")
+@Entity
+@Table(name= "DEPARTAMENTOS")
 public class DepartamentoEntity extends AbstractEntity<Long>{
 
 	/**

@@ -14,7 +14,7 @@ public abstract class AbstractDaoGeneric<T, PK extends Serializable> {
 		private final Class<T> entityClass = (Class<T>) 
 	        ( (ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	    
-	    @PersistenceContext
+	    @PersistenceContext(name="java:jboss/datasources/DemoMvc")
 	    private EntityManager entityManager;
 	 
 	    protected EntityManager getEntityManager() {
@@ -38,7 +38,7 @@ public abstract class AbstractDaoGeneric<T, PK extends Serializable> {
 	    }
 	    
 	    public List<T> findAll() {
-			return entityManager.createQuery("from " + entityClass.getName(), entityClass)
+			return entityManager.createQuery("from " + entityClass.getSimpleName(), entityClass)
 					.getResultList();
 	    }    
 	    
