@@ -1,8 +1,11 @@
 package br.com.workmade.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,18 +28,21 @@ public class DepartamentoController {
 
 	@GetMapping("/cadastrar")
 	public String cadastrar(DepartamentoEntity departamento) {
-		return "/departamento/cadastro";
+		return "departamento/cadastro";
 	}
 	
 
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
 		model.addAttribute("departamentos", departamentoService.buscarTodos());
-		return "/departamento/lista";
+		return "departamento/lista";
 	}
 	
 	@PostMapping("/salvar")
-	public String salvar(DepartamentoEntity departamento, RedirectAttributes redi) {
+	public String salvar(@Valid DepartamentoEntity departamento,BindingResult result, RedirectAttributes redi) {
+		if(result.hasErrors()) {
+			return "departamento/cadastro";
+		}
 		departamentoService.salvar(departamento);
 		redi.addFlashAttribute("success", DEPARTAMENTO_ADICIONADO_COM_SUCESSO);
 		return "redirect:/departamentos/cadastrar";	
@@ -45,7 +51,7 @@ public class DepartamentoController {
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("departamentoEntity", departamentoService.buscarPorId(id));
-		return "/departamento/cadastro";
+		return "departamento/cadastro";
 		
 	}
 	

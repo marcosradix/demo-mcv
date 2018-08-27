@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import br.com.workmade.domain.AbstractEntity;
 
@@ -23,6 +24,7 @@ public class CargoEntity extends AbstractEntity<Long> {
 	@Column(nullable=false, unique=true, length=60)
 	private String nome;
 	
+	@NotNull(message="Selecione o departamento relativo ao cargo.")
 	@ManyToOne
 	@JoinColumn(name= "id_departamento_fk")
 	private DepartamentoEntity departamento;
