@@ -13,8 +13,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<link rel="icon" href="/image/favicon.png" />
 
 	<!-- Bootstrap core CSS -->
-	<link href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/webjars/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
+	<link th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/webjars/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css}" rel="stylesheet" />
 	
 	<!-- Custom styles for this template -->
 	<link href="/css/style.css" rel="stylesheet" />
@@ -44,8 +44,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
-	<script src="/webjars/jquery-mask-plugin/1.14.15/dist/jquery.mask.min.js"></script>
+	<script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/jquery-mask-plugin/1.14.15/dist/jquery.mask.min.js}"></script>
 	<script src="/webjars/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<script src="/js/scripts.js" type="text/javascript "></script>

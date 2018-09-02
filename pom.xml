@@ -7,7 +7,6 @@
 	<groupId>br.com.workmade</groupId>
 	<artifactId>demo-mvc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 
 	<name>demo-mvc</name>
 	<description>Demo project for Spring Boot</description>
@@ -139,4 +138,5 @@
 	</build>
 
 
+	<packaging>war</packaging>
 </project>

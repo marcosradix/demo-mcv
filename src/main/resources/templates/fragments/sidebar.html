@@ -8,14 +8,14 @@
 	<nav class="sidebar sidebar-open" th:fragment="nav-sidebar">
 		<ul class="nav nav-pills">
 			<li class="nav-item"><a class="nav-link " href="/"> <i
-					class="oi oi-home"></i> <span>Home</span>
+					class="oi oi-home"></i> <span th:text="#{sidebar.link.home}" >.</span>
 			</a></li>
 		</ul>
 
 		<ul class="nav nav-pills">
 			<li class="nav-item"><span class="nav-link active">Departamentos</span></li>
 			<li class="nav-item"><a class="nav-link"
-				href="/departamentos/cadastrar"> <i class="oi oi-plus"></i> <span>Cadastrar</span>
+				th:href="@{/departamentos/cadastrar}"> <i class="oi oi-plus"></i> <span>Cadastrar</span>
 			</a></li>
 			<li class="nav-item"><a class="nav-link"
 				href="/departamentos/listar"> <i class="oi oi-spreadsheet"></i>
