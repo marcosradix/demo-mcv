@@ -41,7 +41,7 @@ public class DepartamentoController {
 	@PostMapping("/salvar")
 	public String salvar(@Valid DepartamentoEntity departamento,BindingResult result, RedirectAttributes redi) {
 		if(result.hasErrors()) {
-			return "departamento/cadastro";
+			return "/departamento/cadastro";
 		}
 		departamentoService.salvar(departamento);
 		redi.addFlashAttribute("success", DEPARTAMENTO_ADICIONADO_COM_SUCESSO);
@@ -56,7 +56,10 @@ public class DepartamentoController {
 	}
 	
 	@PostMapping("/editar")
-	public String editar(DepartamentoEntity departamento, RedirectAttributes redi) {
+	public String editar(@Valid DepartamentoEntity departamento, BindingResult result , RedirectAttributes redi) {
+		if(result.hasErrors()) {
+			return "/departamento/cadastro";
+		}
 		departamentoService.editar(departamento);
 		redi.addFlashAttribute("success", DEPARTAMENTO_EDITADO_COM_SUCESSO);
 		return "redirect:/departamentos/listar";

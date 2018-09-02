@@ -2,9 +2,12 @@ package br.com.workmade.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +41,10 @@ public class CargoController {
 		return "cargo/lista";
 	}
 	@PostMapping("/salvar")
-	public String salvar(CargoEntity cargo, RedirectAttributes redi) {
+	public String salvar(@Valid CargoEntity cargo, BindingResult result ,RedirectAttributes redi) {
+		if(result.hasErrors()) {
+			return "cargo/cadastro";
+		}
 		cargoService.salvar(cargo);
 		redi.addFlashAttribute("success", "Cargo inserido com uscesso.");
 		return "redirect:/cargos/cadastrar";
@@ -57,7 +63,10 @@ public class CargoController {
 	}
 	
 	@PostMapping("/editar")
-	public String editar(CargoEntity cargo, RedirectAttributes redi) {
+	public String editar(@Valid CargoEntity cargo , BindingResult result , RedirectAttributes redi) {
+		if(result.hasErrors()) {
+			return "/cargo/cadastro";
+		}
 		cargoService.editar(cargo);
 		redi.addFlashAttribute("success", "Cargo cadastrado com sucesso.");
 		return "redirect:/cargos/listar";

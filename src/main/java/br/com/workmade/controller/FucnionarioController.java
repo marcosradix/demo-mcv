@@ -3,11 +3,16 @@ package br.com.workmade.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +25,7 @@ import br.com.workmade.model.FuncionarioEntity;
 import br.com.workmade.service.CargoService;
 import br.com.workmade.service.FuncionarioService;
 import br.com.workmade.ufEnum.UF;
+import br.com.workmade.validator.FuncionarioValidator;
 
 @Controller
 @RequestMapping("/funcionarios")
@@ -29,6 +35,12 @@ public class FucnionarioController {
 	
 	@Autowired
 	private CargoService cargoService;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.addValidators(new FuncionarioValidator());
+		
+	}
 	
 	@GetMapping("/cadastrar")
 	public String cadastrar(FuncionarioEntity funcionario) {
@@ -43,7 +55,11 @@ public class FucnionarioController {
 	
 	
 	@PostMapping("/salvar")
-	public String salvar(FuncionarioEntity funcionario, RedirectAttributes redi) {
+	public String salvar(@Valid FuncionarioEntity funcionario, BindingResult result, RedirectAttributes redi) {
+		if(result.hasErrors()) {
+			return "funcionario/cadastro";
+		}
+		
 		funcionarioService.salvar(funcionario);
 		redi.addFlashAttribute("success", "Funcionário inserido com uscesso.");
 		return "redirect:/funcionarios/cadastrar";
@@ -68,7 +84,10 @@ public class FucnionarioController {
 	}
 	
 	@PostMapping("/editar")
-	public String editar(FuncionarioEntity funcionario, RedirectAttributes redi) {
+	public String editar(@Valid FuncionarioEntity funcionario, BindingResult result, RedirectAttributes redi) {
+		if(result.hasErrors()) {
+			return "funcionario/cadastro";
+		}
 		funcionarioService.editar(funcionario);
 		redi.addFlashAttribute("success", "Funcionario atualizado com sucesso.");
 		return "redirect:/funcionarios/listar";
